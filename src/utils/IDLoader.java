@@ -23,7 +23,7 @@ public class IDLoader {
         npcIds.clear();
 
         //REGEX explanation
-        // \d+\.         -> matches the line number (e.g., "1.")
+        // \d+\.         -> matches the line number (e.g. "1.")
         // \s+           -> matches spaces
         // (\d+)         -> group 1: Captures the ID number
         // \s+\(Name:\s+ -> matches the " (Name: " part
