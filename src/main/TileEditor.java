@@ -50,7 +50,12 @@ public class TileEditor {
     private JTabbedPane objectTabs;
     private JTabbedPane npcTabs;
     
+    //used to read the parsed tool parameters for loading saved files
+    private static String[] PARAM_ARGS;
+    
     public static void main(String[] args) {
+    	PARAM_ARGS = args;
+    	
         //ensures the GUI runs on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> new TileEditor().createAndShowGUI());
     }
@@ -59,11 +64,31 @@ public class TileEditor {
     	//load initial setup and input dialog
     	loadedSetup = new LoadedSetup(this);
 
-        //create the starting window where you can edit your input before using this tool
-        editorWindow = new EditorWindow(this);
-        
         //get grid size and tile size
-        String[] inputs = editorWindow.showGridSizeSelectionDialog(loadedSetup.getDefaultSizes(), loadedSetup.getTileSizeLoaded(), Long.toString(loadedSetup.getFrameDuration()));
+        String[] inputs;
+        
+        //normal application start
+        if(!appParamsExist()) {
+            //create the starting window where you can edit your input before using this tool
+            editorWindow = new EditorWindow(this);
+            
+        	inputs = editorWindow.showGridSizeSelectionDialog(loadedSetup.getDefaultSizes(), 
+        			loadedSetup.getTileSizeLoaded(), 
+        			Long.toString(loadedSetup.getFrameDuration()));
+        }
+        //in case a map path was parsed and loaded directly
+        else {
+        	inputs = new String[]{loadedSetup.getDefaultSizes().get(0), 
+        			loadedSetup.getTileSizeLoaded(), 
+        			Boolean.toString(false), 
+        			Long.toString(loadedSetup.getFrameDuration())};
+        	
+        	//we set this here now because we do not make the editor window anymore
+            getLoadedSetup().setOldResourceBasePath(getLoadedSetup().getResourceBasePath());
+            //store the path for later use in loading methods
+            getLoadedSetup().setResourceBasePath(getLoadedSetup().getResourceBasePath());
+        }
+        
         if (inputs == null || inputs.length != 4 || !inputs[0].matches("\\d+x\\d+") || !inputs[1].matches("\\d+")) {
             return;
         }
@@ -291,6 +316,37 @@ public class TileEditor {
         //save the new assets location inside the corresponding .txt file
         if(!loadedSetup.getOldResourceBasePath().equals(loadedSetup.getResourceBasePath())) {
         	Utils.saveInitialDefaultValue("default_assets_path.txt", String.valueOf(loadedSetup.getResourceBasePath()));
+        }
+        
+        //auto load saved map files from arguments
+        autoloadOpenedSavedFiles();
+    }
+    
+    private boolean appParamsExist() {
+    	if (PARAM_ARGS != null && PARAM_ARGS.length > 0) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    //method used to check if a saved file .tmdot was double clicked to open a map before opening the tool
+    private void autoloadOpenedSavedFiles() {
+        if (appParamsExist()) {
+            //join all arguments with a space to reconstruct paths that contain spaces
+            String fullPath = String.join(" ", PARAM_ARGS);
+            
+            //clean up any accidental double quotes Windows might wrap around it
+            fullPath = fullPath.replace("\"", ""); 
+            
+            File fileToLoad = new File(fullPath);
+            
+            //verify the file actually exists before trying to load
+            if (fileToLoad.exists() && fileToLoad.isFile()) {
+                System.out.println("Auto-loading project: " + fileToLoad.getAbsolutePath());
+                
+                //load the map
+                canvas.getMapLoader().loadMap(fileToLoad);
+            }
         }
     }
     
