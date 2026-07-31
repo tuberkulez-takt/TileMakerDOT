@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import utils.Utils;
+
 //manages application localization using Java ResourceBundle
 //loads .properties files from the localization.locales package
 public final class LocalizationManager {
@@ -52,6 +54,28 @@ public final class LocalizationManager {
 		} catch(MissingResourceException e) {
 			//fallback to default locale if the requested one is not available
 			bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, FALLBACK_LOCALE);
+		}
+	}
+	
+	//loads a saved locale from a string
+	public void loadSavedLocale(String languageTag) {
+		if(languageTag == null || languageTag.trim().isEmpty()) {
+			return;
+		}
+		
+		String tag = languageTag.trim().toLowerCase();
+		for(Locale locale : AVAILABLE_LOCALES) {
+			if(locale.getLanguage().equals(tag)) {
+				setLocale(locale);
+				return;
+			}
+		}
+	}
+	
+	//saves the current language code to a settings file
+	public void saveCurrentLanguage() {
+		if(currentLocale != null) {
+			Utils.saveInitialDefaultValue("default_language.txt", currentLocale.getLanguage());
 		}
 	}
 	

@@ -782,6 +782,8 @@ public class EditorMenuBar {
 			JMenuItem langItem = new JMenuItem(displayName);
 			langItem.addActionListener(e -> {
 				LocalizationManager.getInstance().setLocale(availableLocale);
+				//save the selected language to settings
+				LocalizationManager.getInstance().saveCurrentLanguage();
 				int response = JOptionPane.showOptionDialog(frame,
 					loc.getString("language_restart"),
 					loc.getString("menu_language"),
