@@ -475,6 +475,7 @@ public class EditorMenuBar {
         });
         
         toolsMenu.add(notesToolItem);
+        toolsMenu.addSeparator();
         toolsMenu.add(scatterBrushItem);
         toolsMenu.add(sliderPanel);
         toolsMenu.add(cleanBrushItem);
@@ -806,6 +807,62 @@ public class EditorMenuBar {
 
         return menuBar;
     }
+	
+	public void createSpritesheetWindow(JFrame frame) {
+    	//show the sprite sheet input tile size dialog with a default value
+    	String input = (String) JOptionPane.showInputDialog(frame,
+    	    "Enter the tile size for the spritesheet (e.g. 32, 64):",
+    	    "Spritesheet Importer Setup",
+    	    JOptionPane.QUESTION_MESSAGE, null, null,
+    	    tileEditor.getLoadedSetup().getTileSize()
+    	);
+    	
+    	//validate the input of sprite sheet importer
+    	if (input != null && !input.trim().isEmpty()) {
+    	    try {
+    	        int importedTileSize = Integer.parseInt(input.trim());
+    	        
+    	        if (importedTileSize <= 0) {
+    	            JOptionPane.showMessageDialog(frame, "Tile size must be greater than 0!", "Invalid Size", JOptionPane.ERROR_MESSAGE);
+    	            return;
+    	        }
+
+    	        //opening the sprite sheet importer here
+            	JFileChooser fc = new JFileChooser();
+            	fc.setDialogTitle("Select Spritesheet Image");
+
+            	//create the filter
+            	FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Images", "png");
+            	fc.setFileFilter(filter);
+            	fc.setAcceptAllFileFilterUsed(false); //disables all files option
+
+            	if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            	    File selectedFile = fc.getSelectedFile();
+            	    //double check extension just in case
+            	    if (selectedFile.getName().toLowerCase().endsWith(ImageUtils.PNG_FORMAT)) {
+            	        SpritesheetImporter importer = new SpritesheetImporter(frame, fc.getSelectedFile(), importedTileSize, tileEditor);
+            	        
+            	        //only show the window if the user did not cancel the folder selection
+            	        if (importer.isDisplayable()) { 
+            	            importer.setVisible(true);
+            	            
+            	            //refresh your assets after importing message
+                            if(showSpreadsheetUpdateOnce) {
+                            	showSpreadsheetUpdateOnce = false;
+                            	JOptionPane.showMessageDialog(frame, "Please restart or refresh assets to see new items after all Sprite Sheets are imported.");
+                            }
+            	        }
+            	    } else {
+            	        JOptionPane.showMessageDialog(frame, "Please select a valid .png file.");
+            	    }
+            	}
+
+    	    } catch (NumberFormatException ex) {
+    	        JOptionPane.showMessageDialog(frame, "Please enter a valid numeric integer!", "Parsing Error", JOptionPane.ERROR_MESSAGE);
+    	        return;
+    	    }
+    	}
+	}
 	
 	//create a custom extension menu that can be called for every direction extension
 	private JMenuItem createExtendMenuItem(JFrame frame, String title, String dialogTitle, int keyCode, MapDirection direction) {
