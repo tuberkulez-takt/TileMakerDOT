@@ -22,6 +22,7 @@ import javax.swing.Scrollable;
 
 import core.TabData;
 import core.Tile;
+import localization.LocalizationManager;
 import utils.ImageUtils;
 import utils.Utils;
 import view.TileCanvas;
@@ -44,6 +45,8 @@ public class AssetPalette {
     
     private TileCanvas canvas;
     private TileEditor tileEditor;
+    
+    private LocalizationManager loc = LocalizationManager.getInstance();
     
 	public AssetPalette(TileEditor tileEditor, TileCanvas canvas) {
 		this.tileEditor = tileEditor;
@@ -295,7 +298,8 @@ public class AssetPalette {
                                     canvas.useBrushObject(idsArray);
                                 }
                             }
-                            canvas.getToastNotification().showToastNotification("Brush now has " + tileEditor.getEditorMenuBar().getBrushIds().size() + " objects..");
+                            
+                            canvas.getToastNotification().showToastNotification(loc.getFormattedString("toast_brush_count", tileEditor.getEditorMenuBar().getBrushIds().size()));
                         } else {
                             //selection logic
                             canvas.setSelectedObjectIndex(id);

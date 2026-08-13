@@ -140,6 +140,7 @@ public final class LocalizationManager {
 		try {
 			return bundle.getString(key);
 		} catch(MissingResourceException e) {
+			System.out.println("WARNING: String not found for key " + key);
 			return key;
 		}
 	}

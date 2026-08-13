@@ -773,7 +773,7 @@ public class EditorMenuBar {
 		
 		helpMenu.addSeparator();
 		
-		//language selection submenu
+		//language selection
 		JMenu langMenu = new JMenu(loc.getString("menu_language"));
 		
 		//dynamically create menu items for each available locale
@@ -880,7 +880,7 @@ public class EditorMenuBar {
 	        String input = JOptionPane.showInputDialog(
 	            frame, 
 	            loc.getString("extend_dialog_message"),
-	            loc.getFormattedString("extend_dialog_title", dialogTitle),
+	            dialogTitle,
 	            JOptionPane.QUESTION_MESSAGE
 	        );
 	        //validate the input
