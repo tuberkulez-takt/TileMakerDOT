@@ -213,34 +213,9 @@ public class EditorMenuBar {
         spriteSheetImport.setToolTipText(loc.getString("menu_import_spritesheet_tooltip"));
         spriteSheetImport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         spriteSheetImport.addActionListener(e -> {
-        	JFileChooser fc = new JFileChooser();
-        	fc.setDialogTitle(loc.getString("dialog_select_spritesheet"));
-
-        	//create the filter
-        	FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Images", "png");
-        	fc.setFileFilter(filter);
-        	fc.setAcceptAllFileFilterUsed(false); //disables all files option
-
-        	if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-        	    File selectedFile = fc.getSelectedFile();
-        	    //double check extension just in case
-        	    if (selectedFile.getName().toLowerCase().endsWith(ImageUtils.PNG_FORMAT)) {
-        	        SpritesheetImporter importer = new SpritesheetImporter(frame, fc.getSelectedFile(), tileEditor.getLoadedSetup().getTileSize(), tileEditor);
-        	        
-        	        //only show the window if the user did not cancel the folder selection
-        	        if (importer.isDisplayable()) { 
-        	            importer.setVisible(true);
-        	            
-        	            //refresh your assets after importing message
-                        if(showSpreadsheetUpdateOnce) {
-                        	showSpreadsheetUpdateOnce = false;
-                        	JOptionPane.showMessageDialog(frame, loc.getString("dialog_restart_refresh"));
-                        }
-        	        }
-        	    } else {
-        	        JOptionPane.showMessageDialog(frame, loc.getString("dialog_select_png"));
-        	    }
-        	}
+        	
+        	//show the sprite sheet input tile size and texture selection
+        	createSpritesheetWindow(frame);
         });
         
         fileMenu.add(loadItem);
@@ -807,10 +782,12 @@ public class EditorMenuBar {
     }
 	
 	public void createSpritesheetWindow(JFrame frame) {
+		LocalizationManager loc = LocalizationManager.getInstance();
+		
     	//show the sprite sheet input tile size dialog with a default value
     	String input = (String) JOptionPane.showInputDialog(frame,
-    	    "Enter the tile size for the spritesheet (e.g. 32, 64):",
-    	    "Spritesheet Importer Setup",
+    			loc.getString("dialog_setup_tile_size_message"),
+    	    loc.getString("dialog_setup_spritesheet_title"),
     	    JOptionPane.QUESTION_MESSAGE, null, null,
     	    tileEditor.getLoadedSetup().getTileSize()
     	);
@@ -821,13 +798,15 @@ public class EditorMenuBar {
     	        int importedTileSize = Integer.parseInt(input.trim());
     	        
     	        if (importedTileSize <= 0) {
-    	            JOptionPane.showMessageDialog(frame, "Tile size must be greater than 0!", "Invalid Size", JOptionPane.ERROR_MESSAGE);
+    	            JOptionPane.showMessageDialog(frame, loc.getString("dialog_setup_invalid_size_message"), 
+    	            		loc.getString("dialog_setup_invalid_size_title"), 
+    	            		JOptionPane.ERROR_MESSAGE);
     	            return;
     	        }
 
     	        //opening the sprite sheet importer here
             	JFileChooser fc = new JFileChooser();
-            	fc.setDialogTitle("Select Spritesheet Image");
+            	fc.setDialogTitle(loc.getString("dialog_select_spritesheet"));
 
             	//create the filter
             	FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Images", "png");
@@ -847,16 +826,18 @@ public class EditorMenuBar {
             	            //refresh your assets after importing message
                             if(showSpreadsheetUpdateOnce) {
                             	showSpreadsheetUpdateOnce = false;
-                            	JOptionPane.showMessageDialog(frame, "Please restart or refresh assets to see new items after all Sprite Sheets are imported.");
+                            	JOptionPane.showMessageDialog(frame, loc.getString("dialog_restart_refresh"));
                             }
             	        }
             	    } else {
-            	        JOptionPane.showMessageDialog(frame, "Please select a valid .png file.");
+            	        JOptionPane.showMessageDialog(frame, loc.getString("dialog_select_png"));
             	    }
             	}
 
     	    } catch (NumberFormatException ex) {
-    	        JOptionPane.showMessageDialog(frame, "Please enter a valid numeric integer!", "Parsing Error", JOptionPane.ERROR_MESSAGE);
+    	        JOptionPane.showMessageDialog(frame, loc.getString("dialog_setup_invalid_numeric_message"), 
+    	        		loc.getString("dialog_setup_invalid_numeric_title"), 
+    	        		JOptionPane.ERROR_MESSAGE);
     	        return;
     	    }
     	}

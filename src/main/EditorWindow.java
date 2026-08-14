@@ -130,6 +130,7 @@ public class EditorWindow {
         UIManager.put("OptionPane.cancelButtonText", loc.getString("button_cancel"));
         UIManager.put("OptionPane.yesButtonText", loc.getString("button_yes"));
         UIManager.put("OptionPane.noButtonText", loc.getString("button_no"));
+        UIManager.put("OptionPane.messageDialogTitle", loc.getString("dialog_default_title"));
         
         JOptionPane optionPane = new JOptionPane(
             dialogPanel,
