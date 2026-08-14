@@ -303,7 +303,7 @@ public class TileEditor {
         	LocalizationManager loc = LocalizationManager.getInstance();
             JOptionPane.showMessageDialog(
                     frame, loc.getFormattedString("hidden_folders_message", assetPalette.getHiddenFolders().toString()),
-                    loc.getString("hidden_folders_message"), JOptionPane.INFORMATION_MESSAGE);
+                    loc.getString("hidden_folders_detected"), JOptionPane.INFORMATION_MESSAGE);
         }
 
         //forced revalidation after GUI is visible

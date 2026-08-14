@@ -314,7 +314,7 @@ public class EditorMenuBar {
      JMenuItem extendMapUp = createExtendMenuItem(
          frame, 
          loc.getString("menu_extend_up"), 
-         loc.getString("menu_extend_up"), 
+         loc.getString("menu_extend_map_up"), 
          KeyEvent.VK_UP, 
          MapDirection.UP
      );
@@ -322,7 +322,7 @@ public class EditorMenuBar {
      JMenuItem extendMapDown = createExtendMenuItem(
          frame, 
          loc.getString("menu_extend_down"), 
-         loc.getString("menu_extend_down"), 
+         loc.getString("menu_extend_map_down"), 
          KeyEvent.VK_DOWN, 
          MapDirection.DOWN
      );
@@ -330,7 +330,7 @@ public class EditorMenuBar {
      JMenuItem extendMapRight = createExtendMenuItem(
          frame, 
          loc.getString("menu_extend_right"), 
-         loc.getString("menu_extend_right"), 
+         loc.getString("menu_extend_map_right"), 
          KeyEvent.VK_RIGHT, 
          MapDirection.RIGHT
      );
@@ -338,7 +338,7 @@ public class EditorMenuBar {
      JMenuItem extendMapLeft = createExtendMenuItem(
          frame, 
          loc.getString("menu_extend_left"), 
-         loc.getString("menu_extend_left"), 
+         loc.getString("menu_extend_map_left"), 
          KeyEvent.VK_LEFT, 
          MapDirection.LEFT
      );
