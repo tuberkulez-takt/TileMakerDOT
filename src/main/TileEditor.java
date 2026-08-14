@@ -355,19 +355,16 @@ public class TileEditor {
     //displays a confirmation dialog and exits the application if the user confirms
     private void confirmExit(JFrame frame) {
     	LocalizationManager loc = LocalizationManager.getInstance();
-        int response = JOptionPane.showOptionDialog(
+        int response = JOptionPane.showConfirmDialog(
             frame,
             loc.getString("exit_confirm_message"),
             loc.getString("exit_confirm_title"),
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.WARNING_MESSAGE,
-            null,
-            new Object[]{loc.getString("button_yes"), loc.getString("button_no")},
-            loc.getString("button_yes")
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
         );
 
         //if the user clicks yes then terminate the application
-        if (response == 0) {
+        if (response == JOptionPane.YES_OPTION) {
             frame.dispose(); //clean up the window resources
             System.exit(0);  //terminate the Java Virtual Machine
         }

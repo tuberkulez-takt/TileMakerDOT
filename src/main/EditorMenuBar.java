@@ -353,11 +353,10 @@ public class EditorMenuBar {
         autoIdItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0));
         autoIdItem.setToolTipText(loc.getString("menu_auto_assign_ids_tooltip"));
         autoIdItem.addActionListener(e -> {
-            int confirm = JOptionPane.showOptionDialog(frame, 
+            int confirm = JOptionPane.showConfirmDialog(frame, 
                 loc.getString("menu_auto_assign_ids_confirm"), 
                 loc.getString("menu_auto_assign_ids_title"), 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, new Object[]{loc.getString("button_yes"), loc.getString("button_no")}, loc.getString("button_yes"));
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             
             if (confirm == JOptionPane.YES_OPTION) {
                 performAutoIDAssignment(frame);
@@ -382,11 +381,10 @@ public class EditorMenuBar {
         cleanupItem.setToolTipText(loc.getString("menu_cleanup_assets_tooltip"));
         cleanupItem.addActionListener(e -> {
             //confirmation dialog before proceeding
-            int confirm = JOptionPane.showOptionDialog(frame, 
+            int confirm = JOptionPane.showConfirmDialog(frame, 
                 loc.getString("menu_cleanup_assets_confirm"), 
                 loc.getString("menu_cleanup_assets_title"), 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                null, new Object[]{loc.getString("button_yes"), loc.getString("button_no")}, loc.getString("button_yes"));
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 
             if (confirm == JOptionPane.YES_OPTION) {
                 canvas.cleanupMissingAssets();
@@ -788,7 +786,7 @@ public class EditorMenuBar {
 				int response = JOptionPane.showOptionDialog(frame,
 					loc.getString("language_restart"),
 					loc.getString("menu_language"),
-					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
 					null, new Object[]{loc.getString("button_yes"), loc.getString("button_no")}, loc.getString("button_yes"));
 				if(response == JOptionPane.YES_OPTION) {
 					LocalizationManager.restartApplication(availableLocale);
@@ -953,15 +951,14 @@ public class EditorMenuBar {
 	
     public void refreshAssets(JFrame frame) {
     	LocalizationManager loc = LocalizationManager.getInstance();
-        int confirm = JOptionPane.showOptionDialog(frame, 
+        int confirm = JOptionPane.showConfirmDialog(frame, 
             loc.getString("refresh_confirm"), loc.getString("refresh_title"), 
-            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-            null, new Object[]{loc.getString("button_yes"), loc.getString("button_no")}, loc.getString("button_yes"));
+            JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION) {
         	loadNewResources();
         }
-    } 
+    }
     
     //refresh resources
     private void loadNewResources() {

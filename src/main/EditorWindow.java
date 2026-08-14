@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import localization.LocalizationManager;
@@ -123,12 +124,19 @@ public class EditorWindow {
         dialogPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         dialogPanel.add(mainInputPanel, BorderLayout.NORTH);
         dialogPanel.add(optionsPanel, BorderLayout.CENTER);
-
+        
+        //generally set all those buttons to use the translated text wherever they will be used
+        UIManager.put("OptionPane.okButtonText", loc.getString("button_ok"));
+        UIManager.put("OptionPane.cancelButtonText", loc.getString("button_cancel"));
+        UIManager.put("OptionPane.yesButtonText", loc.getString("button_yes"));
+        UIManager.put("OptionPane.noButtonText", loc.getString("button_no"));
+        
         JOptionPane optionPane = new JOptionPane(
             dialogPanel,
             JOptionPane.PLAIN_MESSAGE,
             JOptionPane.OK_CANCEL_OPTION
         );
+        
         JDialog dialog = optionPane.createDialog(null, loc.getString("startup_title"));
         dialog.setVisible(true);
 
@@ -162,6 +170,7 @@ public class EditorWindow {
             
             return new String[]{gridSize, tileSize, readIdFlag, animationDuration};
         } else {
+			System.exit(0); //terminate the application
             return null;
         }
     }
