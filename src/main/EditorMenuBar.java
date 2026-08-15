@@ -392,9 +392,9 @@ public class EditorMenuBar {
         //create a container with zero vertical gap
         JPanel sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         sliderPanel.setOpaque(false); 
-
+        
         //small and clean label
-        JLabel spreadLabel = new JLabel("Spread: " + this.getBrushSpread());
+        JLabel spreadLabel = new JLabel(loc.getString("menu_brush_spread") + this.getBrushSpread());
         spreadLabel.setFont(new Font("Arial", Font.PLAIN, 12)); 
 
         //compact slider
@@ -404,7 +404,7 @@ public class EditorMenuBar {
 
         spreadSlider.addChangeListener(e -> {
         	this.setBrushSpread(spreadSlider.getValue());
-            spreadLabel.setText("Spread: " + this.getBrushSpread());
+            spreadLabel.setText(loc.getString("menu_brush_spread") + this.getBrushSpread());
             canvas.setBrushSpread(this.getBrushSpread());
         });
         sliderPanel.add(spreadSlider);

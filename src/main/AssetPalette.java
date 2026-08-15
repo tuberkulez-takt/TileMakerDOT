@@ -268,7 +268,8 @@ public class AssetPalette {
         	JButton btn = new JButton(icon);
             int imageTileWidth = asset.getImage().getWidth() / tileEditor.getLoadedSetup().getTileSize();
             int imageTileHeight = asset.getImage().getHeight() / tileEditor.getLoadedSetup().getTileSize();
-            btn.setToolTipText(asset.getName() + " - ID:" + asset.getId() + " - SIZE:" + imageTileWidth + "x" + imageTileHeight);
+            btn.setToolTipText(asset.getName() + " - ID:" + asset.getId() + " - " + 
+            LocalizationManager.getInstance().getString("hover_object_size") + ":" + imageTileWidth + "x" + imageTileHeight);
             btn.setPreferredSize(new Dimension(defaultTileSizeSelection, defaultTileSizeSelection));
             btn.putClientProperty(clientPropertyKey, asset.getId());
             
