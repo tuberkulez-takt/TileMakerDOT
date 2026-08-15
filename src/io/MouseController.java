@@ -273,7 +273,17 @@ public class MouseController extends MouseAdapter {
 	                	mapState.getData().setObjectMap(row, col, tileCanvas.getDraggedItem().getIndex());
 	                	mapState.addNewSortedObject(row, col, true);
 	                }
-	                tileCanvas.getToastNotification().showToastNotification("Moved " + tileCanvas.getDraggedItem().getType());
+	                
+	                //build and print toast for moving object or NPC
+	                String moved_text = "";
+	                if(tileCanvas.getDraggedItem().getType().equals(ItemType.OBJECT)) {
+	                	moved_text = loc.getString("toast_moved_object");
+	                }
+	                else {
+	                	moved_text = loc.getString("toast_moved_npc");
+	                }
+	                	
+	                tileCanvas.getToastNotification().showToastNotification(moved_text);
 	            }
 	        }
 	        //reset state

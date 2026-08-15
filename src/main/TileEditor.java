@@ -262,10 +262,12 @@ public class TileEditor {
         searchPanel.add(searchFieldFunction.getClearButton(), BorderLayout.EAST);
         searchPanel.add(searchFieldFunction.getSearchLabel(), BorderLayout.WEST);
         
+        LocalizationManager loc = LocalizationManager.getInstance();
+        
         //add the objects and NPCs tabs view
         JTabbedPane itemTabs = new JTabbedPane();
-        itemTabs.addTab(Utils.OBJECTS_NAME, objectTabs);
-        itemTabs.addTab(Utils.NPCS_NAME, npcTabs);
+        itemTabs.addTab(loc.getString("objects_tab"), objectTabs);
+        itemTabs.addTab(loc.getString("npcs_tab"), npcTabs);
         
         //add the status down on the left side bar
         JPanel controlPanel = createControlPanel();
@@ -300,7 +302,6 @@ public class TileEditor {
         
         //show message if any hidden folders were found
         if(!assetPalette.getHiddenFolders().isEmpty()) {
-        	LocalizationManager loc = LocalizationManager.getInstance();
             JOptionPane.showMessageDialog(
                     frame, loc.getFormattedString("hidden_folders_message", assetPalette.getHiddenFolders().toString()),
                     loc.getString("hidden_folders_detected"), JOptionPane.INFORMATION_MESSAGE);
