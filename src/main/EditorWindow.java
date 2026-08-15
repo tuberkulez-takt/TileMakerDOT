@@ -132,6 +132,13 @@ public class EditorWindow {
         UIManager.put("OptionPane.noButtonText", loc.getString("button_no"));
         UIManager.put("OptionPane.messageDialogTitle", loc.getString("dialog_default_title"));
         
+        //dialog titles
+        UIManager.put("FileChooser.openDialogTitleText", loc.getString("dialog_open_title"));
+        UIManager.put("FileChooser.saveDialogTitleText", loc.getString("dialog_save_title"));
+        UIManager.put("FileChooser.openButtonText", loc.getString("button_open"));
+        UIManager.put("FileChooser.saveButtonText", loc.getString("button_save"));
+        UIManager.put("FileChooser.cancelButtonText", loc.getString("button_cancel"));
+        
         JOptionPane optionPane = new JOptionPane(
             dialogPanel,
             JOptionPane.PLAIN_MESSAGE,
