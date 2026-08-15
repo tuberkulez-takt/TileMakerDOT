@@ -282,7 +282,7 @@ public class MouseController extends MouseAdapter {
 	                else {
 	                	moved_text = loc.getString("toast_moved_npc");
 	                }
-	                	
+	                
 	                tileCanvas.getToastNotification().showToastNotification(moved_text);
 	            }
 	        }

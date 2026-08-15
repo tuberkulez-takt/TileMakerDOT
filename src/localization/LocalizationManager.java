@@ -2,6 +2,7 @@ package localization;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -10,8 +11,7 @@ import java.util.ResourceBundle;
 
 import utils.Utils;
 
-//manages application localization using Java ResourceBundle
-//loads .properties files from the localization.locales package
+//manages application localization
 public final class LocalizationManager {
 
 	private static LocalizationManager instance;
@@ -21,6 +21,7 @@ public final class LocalizationManager {
 	
 	//default locale if no matching bundle is found
 	private static final Locale FALLBACK_LOCALE = Locale.ENGLISH;
+	//loads .properties files from the localization.locales package
 	private static final String BUNDLE_BASE_NAME = "localization.locales.messages";
 	
 	//list of available locales
@@ -33,6 +34,7 @@ public final class LocalizationManager {
 	};
 	
 	private LocalizationManager() {
+		//overridden by loading from saved default_language.txt
 		//detect system locale on initialization
 		Locale systemLocale = Locale.getDefault();
 		setLocale(systemLocale);
@@ -80,18 +82,12 @@ public final class LocalizationManager {
 		}
 	}
 	
-	//returns the current locale
-	public Locale getCurrentLocale() {
-		return currentLocale;
-	}
-	
 	//returns all available locales
 	public static Locale[] getAvailableLocales() {
 		return AVAILABLE_LOCALES;
 	}
 	
 	//returns the display name for a locale in that locale's own language
-	//uses the "language_name_{languageTag}" key from the properties file
 	public String getLanguageDisplayName(Locale locale) {
 		String key = "language_name_" + locale.getLanguage();
 		String name = getString(key);
@@ -136,7 +132,6 @@ public final class LocalizationManager {
 	}
 	
 	//retrieves a localized string by key
-	//returns the key itself if no translation is found (useful for debugging)
 	public String getString(String key) {
 		try {
 			return bundle.getString(key);
@@ -146,9 +141,14 @@ public final class LocalizationManager {
 		}
 	}
 	
-	//retrieves a localized string with formatted arguments (like String.format)
+	//retrieves a localized string with formatted arguments
 	public String getFormattedString(String key, Object... args) {
-		String template = getString(key);
-		return String.format(template, args);
+	    String template = getString(key);
+	    if (args == null || args.length == 0) {
+	        return template;
+	    }
+	    //ensures localized number formatting
+	    MessageFormat formatter = new MessageFormat(template, currentLocale);
+	    return formatter.format(args);
 	}
 }
