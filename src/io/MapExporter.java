@@ -389,7 +389,7 @@ public class MapExporter {
 	    //export the map linking it to the TSX
 	    exporter.exportTMX(tmxFile, tsxFile.getName(), mapState.getData().getTileMap(), mapState.getRegistry().getAllSortedItems());
 	    
-	    tileCanvas.getToastNotification().showToastNotification(loc.getString("dialog_godot_exported"));
+	    tileCanvas.getToastNotification().showToastNotification(loc.getString("dialog_tmx_exported"));
 	}
 	
 	public void exportCsvFormat(File file) {
