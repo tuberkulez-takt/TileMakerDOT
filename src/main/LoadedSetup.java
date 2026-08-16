@@ -58,11 +58,10 @@ public class LoadedSetup {
         	}
 
         } catch(NumberFormatException e) {
+        	LocalizationManager loc = LocalizationManager.getInstance();
         	JOptionPane.showMessageDialog(null,
-        	        "Warning: Invalid value found in 'default_frame_ms_duration.txt'.\n" +
-        	        "The value must be a whole number (e.g. 200).\n\n" +
-        	        "The application will use the default speed: 200ms.",
-        	        "Configuration Error",
+        			loc.getString("dialog_invalid_load"),
+        	        loc.getString("Configuration Error"),
         	        JOptionPane.WARNING_MESSAGE);
         }
 	}

@@ -350,7 +350,7 @@ public class SpritesheetImporter extends JDialog {
             importedAreas.add(new Rectangle(selection));
             resetSelection();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Save failed: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, loc.getString("dialog_save_failed") + ex.getMessage());
         }
     }
 

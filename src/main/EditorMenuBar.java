@@ -754,6 +754,8 @@ public class EditorMenuBar {
 		for(java.util.Locale availableLocale : availableLocales) {
 			String displayName = loc.getLanguageDisplayName(availableLocale);
 			JMenuItem langItem = new JMenuItem(displayName);
+			
+			langItem.setIcon(ImageUtils.getFlagIcon(availableLocale.getLanguage(), 16)); 
 			langItem.addActionListener(e -> {
 				LocalizationManager.getInstance().setLocale(availableLocale);
 				//save the selected language to settings
