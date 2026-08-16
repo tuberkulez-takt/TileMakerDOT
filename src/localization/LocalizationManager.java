@@ -28,6 +28,7 @@ public final class LocalizationManager {
 	private static final Locale[] AVAILABLE_LOCALES = {
 		Locale.ENGLISH,
 		new Locale("es"),
+		new Locale("fr"),
 		new Locale("ro"),
 		new Locale("ru"),
 		new Locale("uk")
